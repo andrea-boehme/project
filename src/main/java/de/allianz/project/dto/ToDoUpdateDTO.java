@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @ToString
 @RequiredArgsConstructor
-public class ToDoUpdateDTO {
+public class ToDoUpdateDTO {                //keine Entity
     @NotNull
     @Positive
     private final Long id;  // sichergestellt dass beim erstellen (create) keine id vergeben wird,

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @RequiredArgsConstructor
-public class ToDoCreateDTO {
+public class ToDoCreateDTO {        //keine Entity
 
     @NotBlank
     private final String title;
