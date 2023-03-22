@@ -4,16 +4,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor // automatisch leeren constructor erstellt
 @AllArgsConstructor // automatisch constructor mit allen arguments erstellt
 @Getter
 @Setter
 @Entity
+@ToString
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,9 +24,6 @@ public class ToDo {
     private String priority;
 
     private Boolean status;
-
-
-
 }
 
 

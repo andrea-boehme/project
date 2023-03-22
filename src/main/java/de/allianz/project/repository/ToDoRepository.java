@@ -15,4 +15,9 @@ public interface ToDoRepository extends CrudRepository<ToDo, Long> {
     Long countAllByStatusIsTrue();
     Long countAllByStatusIsFalse();
     Long countAllByStatus(Boolean status); // könnte man generisch so machen
+
+
+    List<ToDo> findAllByTitleContains(String title);
+
+
 }

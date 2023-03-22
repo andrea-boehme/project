@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -49,12 +50,19 @@ public class ToDoService {
     // To_Do löschen
     /**
      * deletes selected "To_Do" from database
-     * @param toDo
+     * @param id
      */
-    public void deleteToDo(ToDo toDo) {
-        ToDo selectedToDo = toDoRepository.findById(toDo.getId()).orElseThrow(
-                () -> new EntityNotFoundException("ToDo not found!"));
-        this.toDoRepository.delete(selectedToDo);
+    public void deleteToDo(Long id) {
+        this.toDoRepository.deleteById(id);
+    }
+
+    // bestimmtes To_Do lesen
+    /**
+     * get specific To_Do by id from database
+     * @param id
+     */
+    public ToDo getToDoById(Long id) {
+        return this.toDoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ToDo not found!"));
     }
 
     // alle ToDos lesen
@@ -101,4 +109,14 @@ public class ToDoService {
     public Long countNotCompletedToDos() {
         return this.toDoRepository.countAllByStatusIsFalse();
     }
+
+// FEHLT NOCH:
+    //public List<ToDo> getCompletedToDos(Boolean true) {
+        //return this.toDoRepository.findAllByStatus(true);
+    //}
+
+    public List<ToDo> findAllByTitleContains() {
+        return this.toDoRepository.findAllByStatusIsFalse();
+    }
+
 }
