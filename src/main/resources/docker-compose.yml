@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+
+  # toDo-database
+  toDo-database:
+    image: postgres:latest
+    container_name: toDo-database
+    ports:
+      - 5432:5432
+    environment:
+      TZ: Europe/Berlin
+      POSTGRES_USER: toDo
+      POSTGRES_PASSWORD: toDo
+      POSTGRES_DB: toDo
+    restart: always
