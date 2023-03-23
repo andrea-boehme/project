@@ -1,5 +1,6 @@
 package de.allianz.project.controller;
 
+import de.allianz.project.config.ModelMapperConfig;
 import de.allianz.project.dto.ToDoCreateDTO;
 import de.allianz.project.dto.ToDoUpdateDTO;
 import jakarta.validation.Valid;
@@ -10,6 +11,7 @@ import de.allianz.project.entity.ToDo;
 
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RestController;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ToDoController {
     private final ToDoService toDoService;
+    private final ModelMapper modelMapper;
 
     //@Autowired
     //public ToDoController(ToDoService toDoService) { this.toDoService = toDoService;}
@@ -33,10 +36,11 @@ public class ToDoController {
 
     @PostMapping // POST (erstellen)
     public ToDo createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
-        ToDo toDo = new ToDo(); // erstellen neues ToDo
-        toDo.setTitle(toDoCreateDTO.getTitle()); // neue title in to_Do abgespeichert
-        toDo.setDescription(toDoCreateDTO.getDescription()); // neue description in to_Do abgespeichert
-        return this.toDoService.createToDo(toDo);
+        //ToDo toDo = new ToDo(); // erstellen neues ToDo, braucht nicht wenn ModleMapping
+        //toDo.setTitle(toDoCreateDTO.getTitle()); // neue title in to_Do abgespeichert, braucht nicht wenn ModleMapping
+        //toDo.setDescription(toDoCreateDTO.getDescription()); // neue description in to_Do abgespeichert, braucht nicht wenn ModleMapping
+        return this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class)); // mappen von Source to Destination; mit ""class" weiss dass neues Objekt erstellen muss
+                                                                                        // map das Objekt auf die Klasse, und bekommen neues ToDo zurückgeliefert
     }
 
     /*
@@ -48,10 +52,15 @@ public class ToDoController {
 
     @PutMapping // PUT (update)
     public ToDo updateToDo(@Valid @RequestBody ToDoUpdateDTO toDoUpdateDTO) {
-
         ToDo toDo = this.toDoService.getToDoById(toDoUpdateDTO.getId());
-        toDo.setTitle(toDoUpdateDTO.getTitle());
-        toDo.setDescription(toDoUpdateDTO.getDescription());
+        modelMapper.map(toDoUpdateDTO, toDo);
+
+
+        //ToDo toDo = this.toDoService.getToDoById(toDoUpdateDTO.getId());
+        //toDo.setTitle(toDoUpdateDTO.getTitle());
+        //toDo.setDescription(toDoUpdateDTO.getDescription());
+
+        // detalhiert; statt drei Zeilen oben
         //ToDo toDo = new ToDo(); // erstellen neues To_Do
         //toDo.setId(toDoUpdateDTO.getId());
         //toDo.setStatus(toDoUpdateDTO.getStatus());

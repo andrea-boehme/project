@@ -1,13 +1,14 @@
 package de.allianz.project.service;
 
 import de.allianz.project.entity.ToDo;
+import de.allianz.project.exception.GlobalExceptionHandler;
 import de.allianz.project.repository.ToDoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -28,6 +29,7 @@ public class ToDoService {
     }
 
     // To_Do updaten
+
     /**
      * updates selected "To_Do" in database
      * @param toDo
@@ -35,7 +37,7 @@ public class ToDoService {
      */
     public ToDo updateToDo(ToDo toDo) {
         ToDo selectedToDo = toDoRepository.findById(toDo.getId()).orElseThrow(
-                () -> new EntityNotFoundException("ToDo not found!"));
+                 () -> new EntityNotFoundException("ToDo not found!"));
 
         selectedToDo.setTitle(toDo.getTitle());
         selectedToDo.setDescription(toDo.getDescription());
@@ -46,6 +48,8 @@ public class ToDoService {
         return this.toDoRepository.save(selectedToDo);
         // könnte hier auch nicht neue parameter setzen und mit ".save(toDo)" überschreiben
     }
+
+
 
     // To_Do löschen
     /**
