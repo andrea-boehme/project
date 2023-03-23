@@ -13,6 +13,8 @@ import de.allianz.project.entity.ToDo;
 //import org.springframework.web.bind.annotation.RestController;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +34,7 @@ public class ToDoController {
     public ToDo createToDo(@RequestBody ToDo toDo) {
         return this.toDoService.createToDo(toDo);
     }
-     */
+
 
     @PostMapping // POST (erstellen)
     public ToDo createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
@@ -41,6 +43,16 @@ public class ToDoController {
         //toDo.setDescription(toDoCreateDTO.getDescription()); // neue description in to_Do abgespeichert, braucht nicht wenn ModleMapping
         return this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class)); // mappen von Source to Destination; mit ""class" weiss dass neues Objekt erstellen muss
                                                                                         // map das Objekt auf die Klasse, und bekommen neues ToDo zurückgeliefert
+    }
+     */
+
+    @PostMapping // POST (erstellen)
+    public ResponseEntity<ToDo> createToDo(@Valid @RequestBody ToDoCreateDTO toDoCreateDTO) {
+        //ToDo toDo = new ToDo(); // erstellen neues ToDo, braucht nicht wenn ModleMapping
+        //toDo.setTitle(toDoCreateDTO.getTitle()); // neue title in to_Do abgespeichert, braucht nicht wenn ModleMapping
+        //toDo.setDescription(toDoCreateDTO.getDescription()); // neue description in to_Do abgespeichert, braucht nicht wenn ModleMapping
+        return new ResponseEntity<>(this.toDoService.createToDo(modelMapper.map(toDoCreateDTO, ToDo.class)), HttpStatus.CREATED); // mappen von Source to Destination; mit ""class" weiss dass neues Objekt erstellen muss
+        // map das Objekt auf die Klasse, und bekommen neues ToDo zurückgeliefert
     }
 
     /*

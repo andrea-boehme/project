@@ -23,6 +23,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { // 
     private final MessageSource messageSource;
 
     @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> entityNotFoundException(RuntimeException exception, WebRequest request) {
         logger.warn("ENTITY NOT FOUND");
         String message = messageSource.getMessage("exception.idNotFound", null, LocaleContextHolder.getLocale());
