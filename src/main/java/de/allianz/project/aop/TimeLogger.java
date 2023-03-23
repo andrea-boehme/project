@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.logging.Level;
 
-import static org.springframework.boot.Banner.Mode.LOG;
-
 @Aspect
 @Log
 @Component
