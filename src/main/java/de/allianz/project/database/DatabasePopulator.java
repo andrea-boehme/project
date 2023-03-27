@@ -5,6 +5,7 @@ import de.allianz.project.repository.ToDoRepository;
 import de.allianz.project.service.ToDoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -18,8 +19,13 @@ public class DatabasePopulator implements CommandLineRunner {
     private final ToDoRepository toDoRepository;
     private final ToDoService toDoService;
 
+    @Value("key")
+    public String key;
+
     @Override
     public void run(String... args) throws Exception {
+
+        System.out.println(key);
 
         log.info("DATABASE WILL BE INITIALIZED");
         final ToDo todo1 = new ToDo(null, "Putzen", "Staub saugen", "morgen", "sofort", true);
