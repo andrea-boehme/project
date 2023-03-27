@@ -83,44 +83,56 @@ public class ToDoService {
      * gets To_Dos with status "complete" (status: true) saved in database
      * @return List with To_Dos that have status: true
      */
-    public List<ToDo> getCompletedToDos() {
-        return this.toDoRepository.findAllByStatusIsTrue();
-    }
+    //public List<ToDo> getCompletedToDos() {
+        //return this.toDoRepository.findAllByStatusIsTrue();
+    //}
 
     // offene ToDos lesen; in Interface "ToDoRepository" wird Methode definiert.
     /**
      * gets To_Dos with status "not complete" (status: false) saved in database
      * @return List with To_Dos that have status: false
      */
-    public List<ToDo> getNotCompletedToDos() {
-        return this.toDoRepository.findAllByStatusIsFalse();
-    }
+    //public List<ToDo> getNotCompletedToDos() {
+        //return this.toDoRepository.findAllByStatusIsFalse();
+    //}
 
     // Anzahl der erledigten ToDos lesen; in Interface "ToDoRepository" wird Methode definiert.
     /**
      * counts number of To-Dos with status "complete" (status: true)
      * @return Number of To_Dos that have status: true
      */
-    public Long countCompletedToDos() {
-        return this.toDoRepository.countAllByStatusIsTrue();
-    }
+    //public Long countCompletedToDos() {
+        //return this.toDoRepository.countAllByStatusIsTrue();
+    //}
 
     // Anzahl der offenen ToDos lesen; in Interface "ToDoRepository" wird Methode definiert.
     /**
      * counts number of To-Dos with status "complete" (status: false)
      * @return Number of To_Dos that have status: false
      */
-    public Long countNotCompletedToDos() {
-        return this.toDoRepository.countAllByStatusIsFalse();
-    }
-
-// FEHLT NOCH:
-    //public List<ToDo> getCompletedToDos(Boolean true) {
-        //return this.toDoRepository.findAllByStatus(true);
+    //public Long countNotCompletedToDos() {
+        //return this.toDoRepository.countAllByStatusIsFalse();
     //}
 
-    public List<ToDo> findAllByTitleContains() {
-        return this.toDoRepository.findAllByStatusIsFalse();
+
+    public List<ToDo> getCompletedToDos() {
+        return this.toDoRepository.findAllByStatus(true);
     }
+
+    public List<ToDo> getNotCompletedToDos() {
+        return this.toDoRepository.findAllByStatus(false);
+    }
+
+    public Long countCompletedToDos() {
+        return this.toDoRepository.countAllByStatus(true);
+    }
+
+    public Long countNotCompletedToDos() {
+        return this.toDoRepository.countAllByStatus(false);
+    }
+
+    //public List<ToDo> findAllByTitleContains() {
+        //return this.toDoRepository.findAllByStatusIsFalse();
+    //}
 
 }
