@@ -17,19 +17,19 @@ public class ToDoRepositoryTest {
 
     private final ToDoRepository toDoRepository;
 
-    private ToDo todo1;
-    private ToDo todo2;
+    private ToDo toDo1;
+    private ToDo toDo2;
 
-    private ToDo todo3;
+    private ToDo toDo3;
 
     @BeforeEach
     public void init() {
 
-        todo1 = new ToDo(null, "Putzen", "Staub saugen", "morgen", "sofort", true);
-        todo2 = new ToDo(null, "Lernen", "Aufgaben rechnen", "morgen", "sofort", false);
-        todo3 = new ToDo(null, "Einkaufen", "Liste aufschreiben", "morgen", "sofort", true);
+        toDo1 = new ToDo(null, "Putzen", "Staub saugen", "morgen", "sofort", true);
+        toDo2 = new ToDo(null, "Lernen", "Aufgaben rechnen", "morgen", "sofort", false);
+        toDo3 = new ToDo(null, "Einkaufen", "Liste aufschreiben", "morgen", "sofort", true);
 
-        this.toDoRepository.saveAll(List.of(todo1, todo2, todo3));
+        this.toDoRepository.saveAll(List.of(toDo1, toDo2, toDo3));
 
         /*
         toDo1 = new ToDo();
@@ -44,13 +44,13 @@ public class ToDoRepositoryTest {
 
     @Test
     public void findAllByStatus() {
-       assertTrue(this.toDoRepository.findAllByStatus(true).contains(todo1));
-       assertTrue(this.toDoRepository.findAllByStatus(false).contains(todo2));
-       assertTrue(this.toDoRepository.findAllByStatus(true).contains(todo3));
+       assertTrue(this.toDoRepository.findAllByStatus(true).contains(toDo1));
+       assertTrue(this.toDoRepository.findAllByStatus(false).contains(toDo2));
+       assertTrue(this.toDoRepository.findAllByStatus(true).contains(toDo3));
 
-       assertFalse(this.toDoRepository.findAllByStatus(false).contains(todo1));
-       assertFalse(this.toDoRepository.findAllByStatus(true).contains(todo2));
-       assertFalse(this.toDoRepository.findAllByStatus(false).contains(todo3));
+       assertFalse(this.toDoRepository.findAllByStatus(false).contains(toDo1));
+       assertFalse(this.toDoRepository.findAllByStatus(true).contains(toDo2));
+       assertFalse(this.toDoRepository.findAllByStatus(false).contains(toDo3));
     }
 
     @Test

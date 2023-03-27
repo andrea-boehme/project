@@ -28,11 +28,11 @@ public class DatabasePopulator implements CommandLineRunner {
         System.out.println(key);
 
         log.info("DATABASE WILL BE INITIALIZED");
-        final ToDo todo1 = new ToDo(null, "Putzen", "Staub saugen", "morgen", "sofort", true);
-        final ToDo todo2 = new ToDo(null, "Lernen", "Aufgaben rechnen", "morgen", "sofort", false);
-        final ToDo todo3 = new ToDo(null, "Einkaufen", "Liste aufschreiben", "morgen", "sofort", true);
+        final ToDo toDo1 = new ToDo(null, "Putzen", "Staub saugen", "morgen", "sofort", true);
+        final ToDo toDo2 = new ToDo(null, "Lernen", "Aufgaben rechnen", "morgen", "sofort", false);
+        final ToDo toDo3 = new ToDo(null, "Einkaufen", "Liste aufschreiben", "morgen", "sofort", true);
 
-        toDoRepository.saveAll(List.of(todo1, todo2, todo3));
+        toDoRepository.saveAll(List.of(toDo1, toDo2, toDo3));
 
         //System.out.println("Anzahl der ToDos: " + toDoRepository.count());
 

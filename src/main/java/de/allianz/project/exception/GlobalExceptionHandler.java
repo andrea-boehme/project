@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RequiredArgsConstructor
 @RestControllerAdvice
 @Log
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { // ResponseEntityExcepHandler übergibt 2 attribute: Runtime und WebRequest
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler { // ResponseEntityExceptionHandler übergibt 2 attribute: Runtime und WebRequest
 
     private final MessageSource messageSource;
 
