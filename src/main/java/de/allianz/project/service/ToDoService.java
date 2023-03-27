@@ -14,11 +14,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ToDoService {
-
     private final ToDoRepository toDoRepository;
 
     // To_Do erstellen; keine id vergeben da es die Datenbank macht
-
     /**
      * creates new "To_Do" in database
      * @param toDo
@@ -26,10 +24,9 @@ public class ToDoService {
      */
     public ToDo createToDo(ToDo toDo) {
         return toDoRepository.save(toDo);
-    }
+    } // führt nicht direkt Transaktionen in der DB aus, sondern verwendet Repositoryschicht
 
     // To_Do updaten
-
     /**
      * updates selected "To_Do" in database
      * @param toDo
@@ -48,8 +45,6 @@ public class ToDoService {
         return this.toDoRepository.save(selectedToDo);
         // könnte hier auch nicht neue parameter setzen und mit ".save(toDo)" überschreiben
     }
-
-
 
     // To_Do löschen
     /**
@@ -74,6 +69,7 @@ public class ToDoService {
      * gets all existing To_Dos saved in database
      * @return List with all To_Dos
      */
+    // SQL Statements viel schneller und sind in Repository verfügbar (derived methods)
     public List<ToDo> getToDos() {
         return (List<ToDo>) this.toDoRepository.findAll();
     }

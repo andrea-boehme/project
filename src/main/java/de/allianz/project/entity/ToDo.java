@@ -10,29 +10,25 @@ import lombok.*;
 @AllArgsConstructor // automatisch constructor mit allen arguments erstellt
 @Getter
 @Setter
-@Entity
+@Entity // zeichnet Klasse als Entität aus (Klasse die in DB gespeichert wird
 @ToString
 public class ToDo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // legt den Primärschlüssel (ID) fest
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // wenn Objekt erstellt, automatisch ID generiert, wenn in DB geschrieben wird
     private Long id;
 
     private String title;
-
     private String description;
     private String dueDate;
     private String priority;
-
     private Boolean status;
 }
 
-
-/* // braucht man nicht leeren constructor da oben @NoArgsConstructor
+/* // braucht man nicht leeren constructor da oben @NoArgsConstructor (lombok)
     public ToDo() {
-
     }
 
-    /* // braucht man nicht da oben @AllArgsConstructor
+/* // braucht man nicht da oben @AllArgsConstructor (lombok)
     public ToDo(Long id, String title, String description, String dueDate, String priority, Boolean status) {
         this.id = id;
         this.title = title;
@@ -41,5 +37,4 @@ public class ToDo {
         this.priority = priority;
         this.status = status;
     }
-
-     */
+*/
