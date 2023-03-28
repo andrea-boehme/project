@@ -10,17 +10,20 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(ToDoController.class)
@@ -36,25 +39,26 @@ public class ToDoControllerTest {
     private ToDo toDo1;
     private ToDo toDo2;
     private ToDo toDo3;
+
+    private ToDo toDo4;
     private List<ToDo> toDoArrayList = new ArrayList<>();
 
     // ID eingeben da hier nicht mit DB arbeiten.
     @BeforeEach
-    public void init(){
+    public void init() {
         toDo1 = new ToDo(1L, "Putzen", "Staub saugen", "morgen", "sofort", true);
         toDo2 = new ToDo(2L, "Lernen", "Aufgaben rechnen", "morgen", "sofort", false);
         toDo3 = new ToDo(3L, "Einkaufen", "Liste aufschreiben", "morgen", "sofort", true);
-        this.toDoArrayList.addAll(Arrays.asList(toDo1,toDo2,toDo3));
+        this.toDoArrayList.addAll(Arrays.asList(toDo1, toDo2, toDo3));
     }
 
 
     @Test
-    public void ShouldGetToDos() throws Exception
-    {
+    public void ShouldGetToDos() throws Exception {
         when(this.toDoService.getToDos()).thenReturn(this.toDoArrayList);
 
         this.mockMvc.perform(
-                get("/toDos"))
+                        get("/ToDos"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(
                         """
@@ -90,24 +94,99 @@ public class ToDoControllerTest {
     }
 
     @Test
-    public void createToDo(){
+    public void ShouldCreateToDo() throws Exception {
 
+        toDo4 = new ToDo(4L, "Sport", "Joggen gehen", "morgen", "sofort", true);
+
+        when(this.toDoService.createToDo(any())).thenReturn(toDo4);
+        //when(this.modelMapper.map(any(), any())).thenReturn(toDo4);
+
+        this.mockMvc.perform(
+                        post("/ToDos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """
+                                                                 
+                                                    {
+                                                             "id": null,
+                                                             "title": "Sport",
+                                                             "description": "Joggen gehen",
+                                                             "dueDate": "morgen",
+                                                             "priority": "sofort",
+                                                             "status": true
+                                                         }
+                                                                                
+                                                """
+                                ))
+                .andExpect(status().isCreated());
+        //.andExpect(content().json());
     }
 
     @Test
-    public void updateToDo(){
+    public void ShouldUpdateToDo() throws Exception { // z.B. status von toDo1 auf false setzen
+        ToDo toDoOld = new ToDo(1L, "Putzen", "Staub saugen", "morgen", "sofort", true);
+        ToDo toDoNew = new ToDo(1L, "Putzen", "Staub saugen", "morgen", "sofort", false);
 
+        when(this.toDoService.getToDoById(any(Long.class))).thenReturn(toDoOld);
+        when(this.toDoService.updateToDo(any(ToDo.class))).thenReturn(toDoNew);
+        when(this.modelMapper.map(any(), any())).thenReturn(toDoNew);
+
+        this.mockMvc.perform(
+                        put("/ToDos")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        """          
+                                                    {
+                                                             "id": 1,
+                                                             "title": "Putzen",
+                                                             "description": "Staub saugen",
+                                                             "dueDate": "morgen",
+                                                             "priority": "sofort",
+                                                             "status": false
+                                                         }                        
+                                                """
+                                ))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """          
+                                    {
+                                             "id": 1,
+                                             "title": "Putzen",
+                                             "description": "Staub saugen",
+                                             "dueDate": "morgen",
+                                             "priority": "sofort",
+                                             "status": false
+                                         }                    
+                                """
+                ));
     }
 
     @Test
-    public void deleteToDo(){
+    public void ShouldDeleteToDo() throws Exception {
 
+        this.mockMvc.perform(delete("/ToDos/1"))
+                .andExpect((status().isNoContent()));
     }
 
     @Test
-    public void getToDoById(){
+    public void ShouldGetToDoById() throws Exception {
 
+        when(this.toDoService.getToDoById(any(Long.class))).thenReturn(toDo1);
+
+        this.mockMvc.perform(get("/ToDos/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(
+                        """
+                                {
+                                                     "id": 1,
+                                                     "title": "Putzen",
+                                                     "description": "Staub saugen",
+                                                     "dueDate": "morgen",
+                                                     "priority": "sofort",
+                                                     "status": true
+                                             }
+                                """
+                ));
     }
-
 
 }
