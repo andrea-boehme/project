@@ -13,11 +13,14 @@ public class BasicAuthSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        //http.csrf().disable();
         http.authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/index.html").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
+
+
 }
 

@@ -1,5 +1,6 @@
 package de.allianz.project.controller;
 
+import de.allianz.project.config.PasswordEncoderConfig;
 import de.allianz.project.entity.ToDo;
 import de.allianz.project.service.ToDoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,7 +29,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
+@Import(PasswordEncoderConfig.class)
 @WebMvcTest(ToDoController.class)
+@WithMockUser
 public class ToDoControllerTest {
 
     @Autowired
@@ -54,6 +59,7 @@ public class ToDoControllerTest {
 
 
     @Test
+    @WithMockUser
     public void ShouldGetToDos() throws Exception {
         when(this.toDoService.getToDos()).thenReturn(this.toDoArrayList);
 
@@ -94,6 +100,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void ShouldCreateToDo() throws Exception {
 
         toDo4 = new ToDo(4L, "Sport", "Joggen gehen", "morgen", "sofort", true);
@@ -123,6 +130,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void ShouldUpdateToDo() throws Exception { // z.B. status von toDo1 auf false setzen
         ToDo toDoOld = new ToDo(1L, "Putzen", "Staub saugen", "morgen", "sofort", true);
         ToDo toDoNew = new ToDo(1L, "Putzen", "Staub saugen", "morgen", "sofort", false);
@@ -162,6 +170,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void ShouldDeleteToDo() throws Exception {
 
         this.mockMvc.perform(delete("/ToDos/1"))
@@ -169,6 +178,7 @@ public class ToDoControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void ShouldGetToDoById() throws Exception {
 
         when(this.toDoService.getToDoById(any(Long.class))).thenReturn(toDo1);
