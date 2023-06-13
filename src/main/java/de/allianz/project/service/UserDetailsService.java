@@ -22,23 +22,24 @@ public class UserDetailsService {
 
         UserDetails user = User.builder()
                 .username("user")
-                //.password(passwordEncoder.encode("userPassword"))
-                .password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW") // steht für "password", muss man encoden
+                .password(passwordEncoder.encode("userPassword")).roles("MEMBER")
+                //.password("{bcrypt}$2a$10$GRLdNijSQMUvl/au9ofL.eDwmoohzzS7.rmNSJZ.0FxO/BTk76klW") // steht für "password", muss man encoden
                 //.roles("USER")
                 .authorities(Role.MEMBER.getGrantedAuthorities())
                 .build();
 
         UserDetails admin = User.builder()
                 .username("admin")
-                //.password(passwordEncoder.encode("adminPassword"))
-                .password("{noop}admin-password")
+                .password(passwordEncoder.encode("adminPassword")).roles("ADMIN")
+                //.password("{noop}admin-password")
                 //.roles("USER", "ADMIN")
                 .authorities(Role.ADMIN.getGrantedAuthorities())
                 .build();
 
         UserDetails analyst = User.builder()
                 .username("analyst")
-                .password("{noop}analyst-password")
+                .password(passwordEncoder.encode("analystPassword")).roles("ANALYST")
+                //.password("{noop}analyst-password")
                 .authorities(Role.ANALYST.getGrantedAuthorities())
                 .build();
 
